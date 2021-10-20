@@ -39,6 +39,12 @@ variable "name" {
   description = "Name for deployment"
 }
 
+variable "letsencrypt_environment" {
+  type        = string
+  default     = "production"
+  description = "LetsEncrypt environment to use ('production' or 'staging')"
+}
+
 variable "letsencrypt_email" {
   type        = string
   default     = "none@none.com"

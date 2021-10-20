@@ -56,7 +56,7 @@ data "cloudinit_config" "k3s_server" {
 
   part {
     content_type = "text/x-shellscript"
-    content      = templatefile("${path.module}/files/rancher-install.sh", { certmanager_version = local.certmanager_version, letsencrypt_email = local.letsencrypt_email, rancher_version = local.rancher_version, rancher_hostname = "${local.subdomain}.${local.domain}", install_rancher = local.install_rancher, install_certmanager = local.install_certmanager, rancher_password = local.rancher_password })
+    content      = templatefile("${path.module}/files/rancher-install.sh", { certmanager_version = local.certmanager_version, letsencrypt_email = local.letsencrypt_email, letsencrypt_environment = local.letsencrypt_environment, rancher_version = local.rancher_version, rancher_hostname = "${local.subdomain}.${local.domain}", install_rancher = local.install_rancher, install_certmanager = local.install_certmanager, rancher_password = local.rancher_password })
   }
 
   part {
