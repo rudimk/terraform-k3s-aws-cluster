@@ -5,7 +5,7 @@ variable "rancher_password" {
 
 variable "rancher_version" {
   type        = string
-  default     = "2.6.2"
+  default     = "2.6.3"
   description = "Version of Rancher to install"
 }
 
