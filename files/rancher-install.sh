@@ -32,6 +32,7 @@ spec:
         source: letsEncrypt
     letsEncrypt:
       email: ${letsencrypt_email}
+      environment: ${letsencrypt_environment}
     bootstrapPassword: ${rancher_password}
 EOF
 %{ endif }
