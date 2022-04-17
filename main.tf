@@ -2,7 +2,7 @@ terraform {
   required_providers {
     rancher2 = {
       source  = "rancher/rancher2"
-      version = ">= 1.10.3"
+      version = ">= 1.23"
     }
     aws = {
       source = "hashicorp/aws"
@@ -37,8 +37,8 @@ locals {
   agent_image_id                 = var.agent_image_id != null ? var.agent_image_id : data.aws_ami.ubuntu.id
   server_image_id                = var.server_image_id != null ? var.server_image_id : data.aws_ami.ubuntu.id
   aws_azs                        = var.aws_azs
-  public_subnets                 = length(var.public_subnets) > 0 ? var.public_subnets : data.aws_subnet_ids.available.ids
-  private_subnets                = length(var.private_subnets) > 0 ? var.private_subnets : data.aws_subnet_ids.available.ids
+  public_subnets                 = length(var.public_subnets) > 0 ? var.public_subnets : data.aws_subnets.available.ids
+  private_subnets                = length(var.private_subnets) > 0 ? var.private_subnets : data.aws_subnets.available.ids
   server_node_count              = var.server_node_count
   agent_node_count               = var.agent_node_count
   ssh_keys                       = var.ssh_keys
@@ -72,7 +72,7 @@ locals {
   create_external_nlb            = var.create_external_nlb ? 1 : 0
   registration_command           = var.registration_command
   rancher_password               = var.rancher_password
-  use_route53                    = var.use_route53 ? 1 : 0
+  use_route53                    = var.use_route53 ? local.create_external_nlb : 0
   subdomain                      = var.subdomain != null ? var.subdomain : var.name
   rds_ca_cert_identifier         = var.rds_ca_cert_identifier
 }
