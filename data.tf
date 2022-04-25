@@ -6,7 +6,7 @@ data "aws_vpc" "default" {
 data "aws_subnets" "available" {
   filter {
     name   = "vpc-id"
-    values = [data.aws_vpc.default.id ]
+    values = [data.aws_vpc.default.id]
   }
 }
 
@@ -49,22 +49,53 @@ data "cloudinit_config" "k3s_server" {
   part {
     filename     = "init.cfg"
     content_type = "text/cloud-config"
-    content      = templatefile("${path.module}/files/cloud-config-base.yaml", { ssh_keys = var.ssh_keys })
+    content = templatefile("${path.module}/files/cloud-config-base.yaml",
+      {
+        ssh_keys = var.ssh_keys
+    })
   }
 
   part {
     content_type = "text/x-shellscript"
-    content      = templatefile("${path.module}/files/k3s-install.sh", { install_k3s_version = local.install_k3s_version, k3s_exec = local.server_k3s_exec, k3s_cluster_secret = local.k3s_cluster_secret, is_k3s_server = true, k3s_url = aws_lb.server-lb.dns_name, k3s_datastore_endpoint = local.k3s_datastore_endpoint, k3s_datastore_cafile = local.k3s_datastore_cafile, k3s_disable_agent = local.k3s_disable_agent, k3s_tls_san = local.k3s_tls_san, k3s_deploy_traefik = local.k3s_deploy_traefik })
+    content = templatefile("${path.module}/files/k3s-install.sh",
+      {
+        install_k3s_version    = local.install_k3s_version,
+        k3s_exec               = local.server_k3s_exec,
+        k3s_cluster_secret     = local.k3s_cluster_secret,
+        is_k3s_server          = true,
+        k3s_url                = aws_lb.server-lb.dns_name,
+        k3s_datastore_endpoint = local.k3s_datastore_endpoint,
+        k3s_datastore_cafile   = local.k3s_datastore_cafile,
+        k3s_disable_agent      = local.k3s_disable_agent,
+        k3s_tls_san            = local.k3s_tls_san,
+        k3s_deploy_traefik     = local.k3s_deploy_traefik
+    })
   }
 
   part {
     content_type = "text/x-shellscript"
-    content      = templatefile("${path.module}/files/rancher-install.sh", { certmanager_version = local.certmanager_version, letsencrypt_email = local.letsencrypt_email, letsencrypt_environment = local.letsencrypt_environment, rancher_version = local.rancher_version, rancher_hostname = "${local.subdomain}.${local.domain}", install_rancher = local.install_rancher, install_certmanager = local.install_certmanager, rancher_password = local.rancher_password })
+    content = templatefile(
+      "${path.module}/files/rancher-install.sh",
+      { certmanager_version     = local.certmanager_version,
+        letsencrypt_email       = local.letsencrypt_email,
+        letsencrypt_environment = local.letsencrypt_environment,
+        rancher_version         = local.rancher_version,
+        rancher_hostname        = "${local.subdomain}.${local.domain}",
+        install_rancher         = local.install_rancher,
+        install_certmanager     = local.install_certmanager,
+        rancher_password        = local.rancher_password,
+        features                = local.rancher_features
+    })
   }
 
   part {
     content_type = "text/x-shellscript"
-    content      = templatefile("${path.module}/files/register-to-rancher.sh", { is_k3s_server = true, install_rancher = local.install_rancher, registration_command = local.registration_command })
+    content = templatefile("${path.module}/files/register-to-rancher.sh",
+      {
+        is_k3s_server        = true,
+        install_rancher      = local.install_rancher,
+        registration_command = local.registration_command
+    })
   }
 }
 
@@ -76,11 +107,26 @@ data "cloudinit_config" "k3s_agent" {
   part {
     filename     = "init.cfg"
     content_type = "text/cloud-config"
-    content      = templatefile("${path.module}/files/cloud-config-base.yaml", { ssh_keys = var.ssh_keys })
+    content = templatefile("${path.module}/files/cloud-config-base.yaml",
+      {
+        ssh_keys = var.ssh_keys
+    })
   }
 
   part {
     content_type = "text/x-shellscript"
-    content      = templatefile("${path.module}/files/k3s-install.sh", { install_k3s_version = local.install_k3s_version, k3s_exec = local.agent_k3s_exec, k3s_cluster_secret = local.k3s_cluster_secret, is_k3s_server = false, k3s_url = aws_lb.server-lb.dns_name, k3s_datastore_endpoint = local.k3s_datastore_endpoint, k3s_datastore_cafile = local.k3s_datastore_cafile, k3s_disable_agent = local.k3s_disable_agent, k3s_tls_san = local.k3s_tls_san, k3s_deploy_traefik = local.k3s_deploy_traefik })
+    content = templatefile("${path.module}/files/k3s-install.sh",
+      {
+        install_k3s_version    = local.install_k3s_version,
+        k3s_exec               = local.agent_k3s_exec,
+        k3s_cluster_secret     = local.k3s_cluster_secret,
+        is_k3s_server          = false,
+        k3s_url                = aws_lb.server-lb.dns_name,
+        k3s_datastore_endpoint = local.k3s_datastore_endpoint,
+        k3s_datastore_cafile   = local.k3s_datastore_cafile,
+        k3s_disable_agent      = local.k3s_disable_agent,
+        k3s_tls_san            = local.k3s_tls_san,
+        k3s_deploy_traefik     = local.k3s_deploy_traefik
+    })
   }
 }

@@ -72,6 +72,7 @@ locals {
   create_external_nlb            = var.create_external_nlb ? 1 : 0
   registration_command           = var.registration_command
   rancher_password               = var.rancher_password
+  rancher_features               = var.rancher_features
   use_route53                    = var.use_route53 ? local.create_external_nlb : 0
   subdomain                      = var.subdomain != null ? var.subdomain : var.name
   rds_ca_cert_identifier         = var.rds_ca_cert_identifier

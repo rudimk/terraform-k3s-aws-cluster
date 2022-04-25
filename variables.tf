@@ -324,3 +324,9 @@ variable "agent_volume_type" {
   description = "Volume Type for K3S Agent nodes"
   type        = string
 }
+
+variable "rancher_features" {
+  default     = null
+  description = "Comma-separated list of feature flags to enable in Rancher"
+  type        = string
+}
