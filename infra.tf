@@ -186,7 +186,7 @@ resource "aws_autoscaling_group" "k3s_agent" {
   min_size            = local.agent_node_count
   vpc_zone_identifier = local.private_subnets
 
-  target_group_arns = local.create_external_nlb ? [
+  target_group_arns = var.create_external_nlb ? [
     aws_lb_target_group.agent-80.0.arn,
     aws_lb_target_group.agent-443.0.arn
   ] : null

@@ -34,8 +34,8 @@ spec:
       email: ${letsencrypt_email}
       environment: ${letsencrypt_environment}
     bootstrapPassword: ${rancher_password}
-    %{ if features }
-    features: ${features}
+    %{ if features != "" }
+    features: "${features}"
     %{ endif }
 EOF
 %{ endif }

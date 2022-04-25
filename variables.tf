@@ -326,7 +326,7 @@ variable "agent_volume_type" {
 }
 
 variable "rancher_features" {
-  default     = null
+  default     = ""
   description = "Comma-separated list of feature flags to enable in Rancher"
   type        = string
 }
