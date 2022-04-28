@@ -188,7 +188,7 @@ variable "db_pass" {
 }
 
 variable "db_engine_version" {
-  default     = "13.3"
+  default     = "13.4"
   type        = string
   description = "Engine Version for RDS Database"
 }
@@ -329,4 +329,10 @@ variable "rancher_features" {
   default     = ""
   description = "Comma-separated list of feature flags to enable in Rancher"
   type        = string
+}
+
+variable "rancher_token_update" {
+  default     = false
+  description = "Regenerate admin token."
+  type        = bool
 }

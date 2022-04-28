@@ -73,6 +73,7 @@ locals {
   registration_command           = var.registration_command
   rancher_password               = var.rancher_password
   rancher_features               = var.rancher_features
+  rancher_token_update = var.rancher_token_update
   use_route53                    = var.use_route53 ? local.create_external_nlb : 0
   subdomain                      = var.subdomain != null ? var.subdomain : var.name
   rds_ca_cert_identifier         = var.rds_ca_cert_identifier
@@ -122,5 +123,6 @@ resource "rancher2_bootstrap" "admin" {
   count            = local.install_rancher ? 1 : 0
   provider         = rancher2.bootstrap
   initial_password = local.rancher_password
+  token_update = local.rancher_token_update
   depends_on       = [null_resource.wait_for_rancher]
 }
