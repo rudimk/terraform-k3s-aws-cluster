@@ -1,4 +1,34 @@
 #!/bin/bash
+
+%{ if install_nginx }
+cat <<EOF >/var/lib/rancher/k3s/server/manifests/nginx.yaml
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ingress-nginx
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: ingress-nginx
+  namespace: kube-system
+spec:
+  helmVersion: v3
+  chart: https://github.com/kubernetes/ingress-nginx/releases/download/helm-chart-${nginx_version}/ingress-nginx-${nginx_version}.tgz
+  targetNamespace: ingress-nginx
+  valuesContent: |-
+    controller:
+      dnsPolicy: ClusterFirstWithHostNet
+      kind: DaemonSet
+      watchIngressWithoutClass: true
+      hostPort:
+        enabled: true
+      ingressClassResource:
+        default: true
+EOF
+%{ endif }
+
 %{ if install_certmanager }
 kubectl create namespace cert-manager
 sleep 5
