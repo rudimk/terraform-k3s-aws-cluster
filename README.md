@@ -112,7 +112,7 @@ No modules.
 | <a name="input_rancher2_token_key"></a> [rancher2\_token\_key](#input\_rancher2\_token\_key) | Rancher2 API token for authentication | `string` | `null`                              | no |
 | <a name="input_rancher_chart"></a> [rancher\_chart](#input\_rancher\_chart) | Helm chart to use for Rancher install | `string` | `"rancher-stable/rancher"`          | no |
 | <a name="input_rancher_password"></a> [rancher\_password](#input\_rancher\_password) | Password to set for admin user during bootstrap of Rancher Server | `string` | `""`                                | no |
-| <a name="input_rancher_version"></a> [rancher\_version](#input\_rancher\_version) | Version of Rancher to install | `string` | `"2.6.4"`                           | no |
+| <a name="input_rancher_version"></a> [rancher\_version](#input\_rancher\_version) | Version of Rancher to install | `string` | `"2.6.6"`                           | no |
 | <a name="input_rds_ca_cert_identifier"></a> [rds\_ca\_cert\_identifier](#input\_rds\_ca\_cert\_identifier) | The identifier of the CA certificate for the DB instance. | `string` | `"rds-ca-2019"`                     | no |
 | <a name="input_registration_command"></a> [registration\_command](#input\_registration\_command) | Registration command to import cluster into Rancher. Should not be used when installing Rancher in this same cluster | `string` | `""`                                | no |
 | <a name="input_server_image_id"></a> [server\_image\_id](#input\_server\_image\_id) | AMI to use for k3s server instances | `string` | `null`                              | no |
